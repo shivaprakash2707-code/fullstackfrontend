@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fleet Focus - Dashboard</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="dashboard-wrapper">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="logo">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#d96c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 3h15v13H1z"/>
+                    <path d="M16 8h4l3 3v5h-7V8z"/>
+                    <circle cx="5.5" cy="18.5" r="2.5"/>
+                    <circle cx="18.5" cy="18.5" r="2.5"/>
+                </svg>
+                <span>Fleet Focus</span>
+            </div>
+            <div class="user-profile">
+                <span class="user-info">
+                    <span class="username" id="displayUsername">Loading...</span>
+                    <span class="role-badge" id="displayRole">Loading...</span>
+                </span>
+                <button id="logoutBtn" class="btn-logout">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                        <polyline points="16 17 21 12 16 7"/>
+                        <line x1="21" y1="12" x2="9" y2="12"/>
+                    </svg>
+                    Logout
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+            <!-- Toast / Message center -->
+            <div id="errorMessage" class="error-message"></div>
+            <div id="successMessage" class="success-message"></div>
+
+            <!-- ================= FLEET MANAGER SECTION ================= -->
+            <section id="fleetManagerSection" class="role-section">
+                <div class="section-header">
+                    <h2>Fleet Manager Workspace</h2>
+                    <div class="header-actions">
+                        <button class="btn-primary" onclick="showModal('vehicleModal')">Add Vehicle</button>
+                        <button class="btn-primary" onclick="showModal('driverModal')">Create Driver</button>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Vehicles Table -->
+                    <div class="card glass">
+                        <h3>Vehicles Inventory</h3>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>License Plate</th>
+                                        <th>Model</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="vehiclesTableBody">
+                                    <tr><td colspan="5" class="loading-cell">Loading vehicles...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Drivers Table -->
+                    <div class="card glass">
+                        <h3>Registered Drivers</h3>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Username</th>
+                                        <th>License Number</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="driversTableBody">
+                                    <tr><td colspan="5" class="loading-cell">Loading drivers...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= DISPATCHER SECTION ================= -->
+            <section id="dispatcherSection" class="role-section">
+                <div class="section-header">
+                    <h2>Dispatcher Dashboard</h2>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <!-- Dispatch Control -->
+                    <div class="card glass form-card">
+                        <h3>Start a Trip</h3>
+                        <form id="startTripForm">
+                            <div class="form-group">
+                                <label for="dispatchVehicle">Select Vehicle</label>
+                                <select id="dispatchVehicle" required>
+                                    <option value="" disabled selected>Select active vehicle</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="dispatchDriver">Select Driver</label>
+                                <select id="dispatchDriver" required>
+                                    <option value="" disabled selected>Select available driver</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn-submit">Dispatch Trip</button>
+                        </form>
+                    </div>
+
+                    <!-- Active Trips -->
+                    <div class="card glass">
+                        <h3>Active & Logged Trips</h3>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Trip ID</th>
+                                        <th>Vehicle</th>
+                                        <th>Driver</th>
+                                        <th>Status</th>
+                                        <th>Distance (km)</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tripsTableBody">
+                                    <tr><td colspan="6" class="loading-cell">Loading trips...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= DRIVER SECTION ================= -->
+            <section id="driverSection" class="role-section">
+                <div class="section-header">
+                    <h2>Driver Panel</h2>
+                </div>
+                <div class="dashboard-grid single-col">
+                    <div class="card glass driver-console">
+                        <div class="console-header">
+                            <div class="driver-status">
+                                <span class="indicator green"></span>
+                                <h3>Active Driving Duty</h3>
+                            </div>
+                        </div>
+                        <div class="driver-details">
+                            <p><strong>Driver ID:</strong> <span id="driverIdVal">N/A</span></p>
+                            <p><strong>License:</strong> <span id="driverLicenseVal">N/A</span></p>
+                            <p><strong>Duty Status:</strong> <span id="driverStatusVal">N/A</span></p>
+                        </div>
+                        <div class="driver-actions">
+                            <p class="helper-text">You are registered as a driver. Ensure your dispatch manager starts a trip for you to update active logs.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= MAINTENANCE TECH SECTION ================= -->
+            <section id="maintenanceTechSection" class="role-section">
+                <div class="section-header">
+                    <h2>Maintenance Tech Portal</h2>
+                </div>
+                <div class="dashboard-grid single-col">
+                    <div class="card glass">
+                        <h3>Vehicle Fleet Maintenance Log</h3>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Vehicle ID</th>
+                                        <th>License Plate</th>
+                                        <th>Model</th>
+                                        <th>Current Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="maintenanceTableBody">
+                                    <tr><td colspan="5" class="loading-cell">Loading fleet data...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- ================= VEHICLE MODAL ================= -->
+    <div id="vehicleModal" class="modal">
+        <div class="modal-content glass">
+            <span class="close-btn" onclick="closeModal('vehicleModal')">&times;</span>
+            <h3 id="vehicleModalTitle">Add Vehicle</h3>
+            <form id="vehicleForm">
+                <input type="hidden" id="vehicleId">
+                <div class="form-group">
+                    <label for="licensePlate">License Plate</label>
+                    <input type="text" id="licensePlate" placeholder="e.g. MH-12-AB-1234" required>
+                </div>
+                <div class="form-group">
+                    <label for="vin">VIN (17 characters)</label>
+                    <input type="text" id="vin" placeholder="e.g. 1HGCR2F83JA000000" minlength="17" maxlength="17" required>
+                </div>
+                <div class="form-group">
+                    <label for="vehicleModel">Model / Description</label>
+                    <input type="text" id="vehicleModel" placeholder="e.g. Tata Starbus 40-Seater" required>
+                </div>
+                <div class="form-group">
+                    <label for="currentMileage">Current Mileage (km)</label>
+                    <input type="number" step="0.1" id="currentMileage" placeholder="e.g. 12000.5" required>
+                </div>
+                <div class="form-group">
+                    <label for="vehicleStatus">Status</label>
+                    <select id="vehicleStatus" required>
+                        <option value="AVAILABLE">Available</option>
+                        <option value="UNDER_MAINTENANCE">Under Maintenance</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-submit">Save Vehicle</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= DRIVER MODAL ================= -->
+    <div id="driverModal" class="modal">
+        <div class="modal-content glass">
+            <span class="close-btn" onclick="closeModal('driverModal')">&times;</span>
+            <h3>Create Driver Profile</h3>
+            <form id="driverForm">
+                <div class="form-group">
+                    <label for="driverUserId">System User ID</label>
+                    <input type="number" id="driverUserId" placeholder="Enter numeric User ID" required>
+                </div>
+                <div class="form-group">
+                    <label for="licenseNumber">Commercial License Number</label>
+                    <input type="text" id="licenseNumber" placeholder="e.g. DL-14202300045" required>
+                </div>
+                <button type="submit" class="btn-submit">Register Driver</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= TRIP END MODAL ================= -->
+    <div id="endTripModal" class="modal">
+        <div class="modal-content glass">
+            <span class="close-btn" onclick="closeModal('endTripModal')">&times;</span>
+            <h3>End Trip Log</h3>
+            <form id="endTripForm">
+                <input type="hidden" id="endTripId">
+                <div class="form-group">
+                    <label for="tripDistance">Distance Travelled (kilometers)</label>
+                    <input type="number" step="0.1" id="tripDistance" placeholder="e.g. 15.4" required>
+                </div>
+                <button type="submit" class="btn-submit">End Trip</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

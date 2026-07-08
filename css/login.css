@@ -1,0 +1,288 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: arial, sans-serif;
+    background-image: url(../images/road.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #0f172a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1;
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+    width: 500px;
+    background: rgba(20, 20, 30, 0.45);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 50px 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    color: white;
+    animation: fadeSlideIn 0.6s ease-out;
+}
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Logo Icon --- */
+.logo-icon {
+    text-align: center;
+    font-size: 50px;
+    margin-bottom: 5px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+/* --- Headings --- */
+h1 {
+    font-size: 48px;
+    text-align: center;
+    color: #d96c0c;
+    margin-bottom: 8px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #cbd5e1;
+    font-weight: 400;
+    font-size: 18px;
+    letter-spacing: 0.5px;
+}
+
+/* --- Form Groups --- */
+.form-group {
+    margin-bottom: 22px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #d96c0c;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* --- Input Wrapper with Icons --- */
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.input-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.input-wrapper input {
+    padding-left: 42px;
+    padding-right: 45px;
+}
+
+input {
+    height: 50px;
+    padding: 10px 15px;
+    font-size: 16px;
+    width: 100%;
+    background: #edeceb;
+    color: rgb(0, 0, 0);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+input:focus {
+    border-color: #d96c0c;
+    box-shadow: 0 0 0 3px rgba(217, 108, 12, 0.25);
+    transform: translateY(-1px);
+}
+
+input::placeholder {
+    color: #7a7572;
+}
+
+/* --- Password Toggle --- */
+.toggle-password {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+    z-index: 1;
+}
+
+.toggle-password:hover {
+    opacity: 1;
+}
+
+.toggle-password svg {
+    transition: stroke 0.2s ease;
+}
+
+.toggle-password:hover svg {
+    stroke: #d96c0c;
+}
+
+/* --- Button --- */
+button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 220px;
+    height: 50px;
+    font-size: 16px;
+    margin: 30px auto 0;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #d96c0c, #f5920a);
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    transition: transform 0.15s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(217, 108, 12, 0.25);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* --- Loader Spinner --- */
+.btn-loader {
+    display: none;
+    width: 18px;
+    height: 18px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+.btn-loader.active {
+    display: inline-block;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* --- Links --- */
+p {
+    margin-top: 25px;
+    text-align: center;
+    color: #cbd5e1;
+}
+
+a {
+    text-decoration: none;
+    color: #d96c0c;
+    font-weight: bold;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #f07d1a;
+}
+
+/* --- Error & Success Messages --- */
+.error-message {
+    display: none;
+    color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 5px;
+    animation: shake 0.4s ease;
+}
+
+.error-message.active {
+    display: block;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(5px); }
+}
+
+.success-message {
+    display: none;
+    color: #51cf66;
+    background: rgba(81, 207, 102, 0.1);
+    border: 1px solid rgba(81, 207, 102, 0.3);
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.success-message.active {
+    display: block;
+}

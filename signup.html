@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fleet Focus - Sign Up</title>
+    <link rel="stylesheet" href="css/signup.css">
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="container">
+        <h1>Fleet Focus</h1>
+        <h2>Create Account</h2>
+        <form id="signupForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter your username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                    <span class="toggle-password" id="togglePassword"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+                    <span class="toggle-password" id="toggleConfirmPassword"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="role">Role</label>
+                <select id="role" required>
+                    <option value="" disabled selected>Select your role</option>
+                    <option value="FLEET_MANAGER">Fleet Manager</option>
+                    <option value="DISPATCHER">Dispatcher</option>
+                    <option value="DRIVER">Driver</option>
+                    <option value="MAINTENANCE_TECH">Maintenance Tech</option>
+                </select>
+            </div>
+            <div id="errorMessage" class="error-message"></div>
+            <div id="successMessage" class="success-message"></div>
+            <button type="submit" id="submitBtn">
+                <span class="btn-text">Sign Up</span>
+                <span class="btn-loader" id="btnLoader"></span>
+            </button>
+        </form>
+        <p>Already have an account?
+            <a href="login.html">Login</a>
+        </p>
+    </div>
+    <script src="js/signup.js"></script>
+</body>
+</html>
